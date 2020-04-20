@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: micronaut.kafka.graphql
+---
+testFramework: kotlintest
+sourceLanguage: kotlin

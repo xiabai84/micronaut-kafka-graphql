@@ -1,0 +1,14 @@
+---
+micronaut:
+  application:
+    name: micronaut-kafka-graphql
+
+---
+kafka:
+  bootstrap:
+    servers: localhost:9092
+
+---
+graphql:
+  graphiql.enabled: true
+  path: /graphql
