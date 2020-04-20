@@ -5,7 +5,7 @@ import java.util.*
 
 @Introspected
 data class Market (
-    val marketId: String = UUID.randomUUID().toString(),
+    val marketId: String,
     val marketType: String,
     val country: String,
     val zipCode: String

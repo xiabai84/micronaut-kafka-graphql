@@ -10,5 +10,5 @@ kafka:
 
 ---
 graphql:
-  graphiql.enabled: true
-  path: /graphql
+  graphiql:
+    enabled: true

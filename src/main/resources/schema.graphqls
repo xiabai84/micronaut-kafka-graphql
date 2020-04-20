@@ -1,0 +1,10 @@
+type Mutation {
+    createMarket(market: Market!): Market
+}
+
+type Market {
+    marketId: ID
+    marketType: String!
+    country: String!
+    zipcode: String!
+}
