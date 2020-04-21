@@ -1,4 +1,4 @@
-package micronaut.kafka.graphql.backend.kafka.graphql
+package micronaut.kafka.graphql.graphql
 
 import graphql.GraphQL
 import graphql.schema.idl.RuntimeWiring
@@ -19,26 +19,28 @@ class GraphQLFactory {
 
     @Bean
     @Singleton
-    fun graphQL(resourceResolver: ResourceResolver, createMarketDataFetcher: CreateMarketDataFetchers): GraphQL { // <2>
+    fun graphQL(resourceResolver: ResourceResolver,
+                createMarketDataFetcher: CreateMarketDataFetcher,
+                allMarketDataFetcher: AllMarketDataFetcher ): GraphQL {
 
         val schemaParser = SchemaParser()
         val schemaGenerator = SchemaGenerator()
+        val typeRegistry = TypeDefinitionRegistry()
 
-        val typeRegistry = TypeDefinitionRegistry();
         typeRegistry.merge(schemaParser.parse(BufferedReader(InputStreamReader(
                 resourceResolver.getResourceAsStream("classpath:schema.graphqls").get()))))
 
-        // Create the runtime wiring.
         val runtimeWiring = RuntimeWiring.newRuntimeWiring()
-                .type("Mutation") { typeWiring ->
-                    typeWiring.dataFetcher("createMarket", createMarketDataFetcher)
+                .type("Mutation") { typeWiring -> typeWiring
+                        .dataFetcher("createMarket", createMarketDataFetcher)
+                }
+                .type("Query") { typeWiring -> typeWiring
+                        .dataFetcher("allMarkets", allMarketDataFetcher)
                 }
                 .build()
 
-        // Create the executable schema.
         val graphQLSchema = schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring)
 
-        // Return the GraphQL bean.
         return GraphQL.newGraphQL(graphQLSchema).build()
     }
 }
