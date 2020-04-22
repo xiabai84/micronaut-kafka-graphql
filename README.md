@@ -73,7 +73,7 @@ $ confluent start kafka
 
 Create a predefined Kafka Topic for receiving data from Kafka Producer:
 ```
-kafka-topics --create --zookeeper localhost:2181 --topic market-event-store --partitions 10 --replication-factor 1
+$ kafka-topics --create --zookeeper localhost:2181 --topic market-event-store --partitions 10 --replication-factor 1
 ```
 
 Open terminal & clone my project from Github:
@@ -87,5 +87,5 @@ $ ./gradlew run
 
 For validation scope you can also use console-consumer:
 ```
-kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic market-event-store
+$ kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic market-event-store
 ```
