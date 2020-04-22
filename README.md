@@ -9,9 +9,9 @@ The project is structured as below. There are three main modules under src/main/
 
 **graphql** contains:
 
-* one GraphQLFactory class, which is responsble for registering GraphQL interfaces
+* exactly one GraphQLFactory class, which is responsble for registering GraphQL interfaces
 
-* one or more implementation classes of GraphQL interfaces, which extend DataFetcher classes
+* one or more implementation classes of GraphQL interfaces, which are extensions of DataFetcher classes. It is responsble for binding GraphQL with custom backend service
 
 **service** contins Kafka related backend implementation classes, which are normally the Kafka Streams, Statestore and common Kafka Producer/Consumer.
 
