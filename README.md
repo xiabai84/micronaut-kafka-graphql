@@ -23,6 +23,7 @@ Under **src/mainresources** folder there are two important configuration files:
 * schema.graphqls contains GraphQL schema definition, which links GraphQL interface together with GraphQLFactory class
 
 ```
+├── ...
 ├── Dockerfile
 ├── README.md
 └── src
