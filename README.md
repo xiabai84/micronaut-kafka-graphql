@@ -1,7 +1,7 @@
 # micronaut-kafka-graphql
 
 ## About this project
-This program demonstrates mainly the interaction between Kafka and GraphQL within Micronaut Framework. By running this project it will provide two GraphQL interfaces for writing (mutation) and reading (query) data from Kafka Topic. There is also a Kafka Streams service inside the program, which updates the Market record to current state by providing the same marketId (see model Market). 
+This program demonstrates mainly the interaction between Kafka and GraphQL within Micronaut Framework. By running this project it will provide two GraphQL interfaces for writing (mutation) and reading (query) data from Kafka. There is also a Kafka Streams service inside the program, which will update the Market record to current state by providing the same marketId (see model Market). 
 
 All of changes over GraphQL mutation will finally persist in Kafka Topic market-event-store. You can review them by using kafka-console-consumer command line tool.
 
@@ -91,3 +91,35 @@ For validation scope you can also use console-consumer:
 ```
 $ kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic market-event-store
 ```
+
+## GraphQL Example
+Open web browser via http://localhost:8080/graphiql
+
+Perform a mutation GraphQL command over graphiql:
+```
+mutation {
+  createMarket(marketInput: {
+    marketId: "id-1", currentStatus: "closed", country: "china", zipcode:"130000"
+  }) {
+    marketId
+    currentStatus
+    country
+    zipcode
+    timestamp
+  }
+}
+```
+
+Perform a query GraphQL command over graphiql:
+```
+query {
+  allMarkets {
+    marketId
+    currentStatus
+    country
+    zipcode
+    timestamp
+  }
+}
+```
+
