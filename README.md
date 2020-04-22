@@ -63,3 +63,29 @@ Under **src/mainresources** folder there are two important configuration files:
                     └── graphql
 ```
 
+## Running the Application
+First you need a running local Kafka cluster. There are multiple installation options, you can find them in the link below: https://docs.confluent.io/current/quickstart/index.html
+
+After the installation you can use confluent-cli tool to start local Kafka broker and zookeeper:
+```
+$ confluent start kafka
+```
+
+Create a predefined Kafka Topic for receiving data from Kafka Producer:
+```
+kafka-topics --create --zookeeper localhost:2181 --topic market-event-store --partitions 10 --replication-factor 1
+```
+
+Open terminal & clone my project from Github:
+```
+$ git clone https://github.com/xiabai84/micronaut-kafka-graphql.git
+```
+Then switch to project root directory and perform:
+```
+$ ./gradlew run
+```
+
+For validation scope you can also use console-consumer:
+```
+kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic market-event-store
+```
