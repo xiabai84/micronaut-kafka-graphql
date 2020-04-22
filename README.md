@@ -1,7 +1,9 @@
 # micronaut-kafka-graphql
 
 ## About this project
-This program demonstrates mainly the interaction between Kafka and GraphQL within Micronaut Framework. By running this project it will provide two GraphQL interfaces for writing (mutation) and reading (query) data from Kafka Topic.
+This program demonstrates mainly the interaction between Kafka and GraphQL within Micronaut Framework. By running this project it will provide two GraphQL interfaces for writing (mutation) and reading (query) data from Kafka Topic. There is also a Kafka Streams service inside the program, which updates the Market record to current state by providing the same marketId (see model Market). 
+
+All of changes over GraphQL mutation will finally persist in Kafka Topic market-event-store. You can review them by using kafka-console-consumer command line tool.
 
 ## Project structure
 The project is structured as below. There are three main modules under src/main/kotlin/micronaut/kafka.
