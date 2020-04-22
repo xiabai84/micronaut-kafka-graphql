@@ -17,6 +17,11 @@ The project is structured as below. There are three main modules under src/main/
 
 **model** stores data classes for the whole program
 
+Under **src/mainresources** folder there are two important configuration files:
+
+* application.yml contains the configuration for whole micronaut backend including Kafka service
+* schema.graphqls contains GraphQL schema definition, which links GraphQL interface together with GraphQLFactory class
+
 ```
 ├── Dockerfile
 ├── README.md
@@ -51,3 +56,4 @@ The project is structured as below. There are three main modules under src/main/
                 └── kafka
                     └── graphql
 ```
+
