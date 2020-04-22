@@ -24,6 +24,11 @@ Under **src/mainresources** folder there are two important configuration files:
 
 ```
 ├── ...
+├── build.gradle
+├── gradle.properties
+├── gradlew
+├── micronaut-cli.yml
+├── settings.gradle
 ├── Dockerfile
 ├── README.md
 └── src
