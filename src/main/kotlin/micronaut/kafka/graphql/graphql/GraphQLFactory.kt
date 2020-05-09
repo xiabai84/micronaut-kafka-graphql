@@ -20,8 +20,10 @@ class GraphQLFactory {
     @Bean
     @Singleton
     fun graphQL(resourceResolver: ResourceResolver,
-                createMarketDataFetcher: CreateMarketDataFetcher,
-                allMarketDataFetcher: AllMarketDataFetcher ): GraphQL {
+                mutationMarketEventDataFetcher: MutationMarketEventDataFetcher,
+                allCurrentMarketDataFetcher: AllCurrentMarketDataFetcher,
+                marketHistDataFetcher: MarketHistDataFetcher
+    ): GraphQL {
 
         val schemaParser = SchemaParser()
         val schemaGenerator = SchemaGenerator()
@@ -32,10 +34,11 @@ class GraphQLFactory {
 
         val runtimeWiring = RuntimeWiring.newRuntimeWiring()
                 .type("Mutation") { typeWiring -> typeWiring
-                        .dataFetcher("createMarket", createMarketDataFetcher)
+                        .dataFetcher("createMarketEvent", mutationMarketEventDataFetcher)
                 }
                 .type("Query") { typeWiring -> typeWiring
-                        .dataFetcher("allMarkets", allMarketDataFetcher)
+                        .dataFetcher("allMarkets", allCurrentMarketDataFetcher)
+                        .dataFetcher("getMarketHistById", marketHistDataFetcher)
                 }
                 .build()
 

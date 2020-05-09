@@ -6,19 +6,27 @@ type Market {
     timestamp: Long!
 }
 
+enum EventType {
+    CREATE
+    UPDATE
+    DELETE
+}
+
 input MarketInput {
     marketId: ID!
     currentStatus: String!
     country: String!
     zipcode: String!
+    eventType: EventType!
 }
 
 type Mutation {
-    createMarket(marketInput: MarketInput): Market
+    createMarketEvent(marketInput: MarketInput): String
 }
 
 type Query {
     allMarkets: [Market]
+    getMarketHistById(marketid: String):[Market]
 }
 
 schema {
