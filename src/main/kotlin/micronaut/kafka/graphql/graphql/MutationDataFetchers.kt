@@ -27,6 +27,7 @@ class MutationMarketEventDataFetcher(private val marketMutationService: MarketMu
             else -> {
                 if (marketInput.marketId.isNullOrEmpty())
                     throw IllegalArgumentException("Please provide a marketId for Update or Delete Event!")
+                // or if market object should be exist first...
                 marketInput.marketId
             }
         }

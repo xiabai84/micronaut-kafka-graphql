@@ -36,5 +36,3 @@ fun updateCurrentMarket(): ValueTransformerWithKeySupplier<String, MarketEvent, 
             override fun close() {}
         }
     }
-
-
