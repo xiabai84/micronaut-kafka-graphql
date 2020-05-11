@@ -17,9 +17,9 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 const val MARKET_EVENT_TOPIC = "market-event-store"
-const val CURRENT_MARKET_STORE = "current-market-store"
-const val MARKET_HIST_STORE = "market-hist-store"
-const val MARKET_APP_ID = "market-stream"
+const val CURRENT_MARKET_STORE = "current-market-statestore"
+const val MARKET_HIST_STORE = "market-hist-statestore"
+const val MARKET_APP_ID = "market-stream-app"
 
 @Factory
 class MarketStream {
