@@ -59,14 +59,14 @@ class MarketStream {
 
         groupedMarketEvent
             .aggregate(
-            { MarketHistView(marketEventList = mutableListOf()) },
-            { _: String, value: MarketEvent, aggregate: MarketHistView ->
-                aggregate.marketEventList.add(value)
-                aggregate
-            },
-            Materialized.`as`<String, MarketHistView>(marketHistStore)
-                .withKeySerde(Serdes.String())
-                .withValueSerde(JsonSerde(objectMapper, MarketHistView::class.java))
+                { MarketHistView(marketEventList = mutableListOf()) },
+                { _: String, value: MarketEvent, aggregate: MarketHistView ->
+                    aggregate.marketEventList.add(value)
+                    aggregate
+                },
+                Materialized.`as`<String, MarketHistView>(marketHistStore)
+                    .withKeySerde(Serdes.String())
+                    .withValueSerde(JsonSerde(objectMapper, MarketHistView::class.java))
             )
 
         return stream

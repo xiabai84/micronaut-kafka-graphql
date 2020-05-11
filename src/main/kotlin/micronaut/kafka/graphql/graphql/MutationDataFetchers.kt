@@ -39,16 +39,31 @@ class MutationMarketEventDataFetcher(private val marketMutationService: MarketMu
     }
 
     private fun applyPayload (marketId: String, eventType: EventType, marketInput: MarketInput): Market? {
-        if (eventType == EventType.CREATE || eventType == EventType.UPDATE) {
-            return Market (
-                marketId = marketId,
-                currentStatus = marketInput.currentStatus,
-                country = marketInput.country,
-                zipcode = marketInput.zipcode
-            )
-        }
 
-        return null
+        return when(marketInput.eventType) {
+            EventType.CREATE -> {
+                 Market(
+                    marketId = UUID.randomUUID().toString(),
+                    currentStatus = marketInput.currentStatus,
+                    country = marketInput.country,
+                    zipcode = marketInput.zipcode
+                )
+            }
+
+            EventType.UPDATE -> {
+                if (marketInput.marketId.isNullOrEmpty())
+                    throw IllegalArgumentException("Please provide a marketId for Update Event!")
+
+                Market(
+                        marketId = marketInput.marketId,
+                        currentStatus = marketInput.currentStatus,
+                        country = marketInput.country,
+                        zipcode = marketInput.zipcode
+                )
+            }
+
+            else -> null
+        }
     }
 }
 
