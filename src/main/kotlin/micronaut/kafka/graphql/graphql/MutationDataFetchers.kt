@@ -46,10 +46,10 @@ class MutationMarketEventDataFetcher(private val marketMutationService: MarketMu
         when (marketInput.eventType) {
             EventType.CREATE, EventType.UPDATE -> {
                 Market(
-                        marketId = marketId,
-                        currentStatus = marketInput.currentStatus,
-                        country = marketInput.country,
-                        zipcode = marketInput.zipcode
+                    marketId = marketId,
+                    currentStatus = marketInput.currentStatus,
+                    country = marketInput.country,
+                    zipcode = marketInput.zipcode
                 )
             }
             else -> null
