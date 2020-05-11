@@ -21,16 +21,20 @@ class MutationMarketEventDataFetcher(private val marketMutationService: MarketMu
         val marketInput =
                 objectMapper.convertValue(env.getArgument("marketInput"), MarketInput::class.java)
 
-        val marketId = marketInput.marketId?: UUID.randomUUID().toString()
+        val marketId = when (marketInput.eventType) {
+            EventType.CREATE -> UUID.randomUUID().toString()
+
+            else -> {
+                if (marketInput.marketId.isNullOrEmpty())
+                    throw IllegalArgumentException("Please provide a marketId for Update or Delete Event!")
+                marketInput.marketId
+            }
+        }
 
         val event = MarketEvent(
             command = marketInput.eventType,
             marketId = marketId,
-            payload = applyPayload(
-                marketId = marketId,
-                eventType = marketInput.eventType,
-                marketInput = marketInput
-            )
+            payload = applyPayload(marketId = marketId, marketInput = marketInput)
         )
 
         marketMutationService.createMarketEvent(eventId = event.marketEventId, event = event)
@@ -38,32 +42,17 @@ class MutationMarketEventDataFetcher(private val marketMutationService: MarketMu
         return marketId
     }
 
-    private fun applyPayload (marketId: String, eventType: EventType, marketInput: MarketInput): Market? {
-
-        return when(marketInput.eventType) {
-            EventType.CREATE -> {
-                 Market(
-                    marketId = UUID.randomUUID().toString(),
-                    currentStatus = marketInput.currentStatus,
-                    country = marketInput.country,
-                    zipcode = marketInput.zipcode
-                )
-            }
-
-            EventType.UPDATE -> {
-                if (marketInput.marketId.isNullOrEmpty())
-                    throw IllegalArgumentException("Please provide a marketId for Update Event!")
-
+    private fun applyPayload (marketId: String, marketInput: MarketInput): Market? =
+        when (marketInput.eventType) {
+            EventType.CREATE, EventType.UPDATE -> {
                 Market(
-                        marketId = marketInput.marketId,
+                        marketId = marketId,
                         currentStatus = marketInput.currentStatus,
                         country = marketInput.country,
                         zipcode = marketInput.zipcode
                 )
             }
-
             else -> null
         }
-    }
 }
 
